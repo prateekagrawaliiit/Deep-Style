@@ -2,12 +2,12 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-07 01:02:47
+# @Last Modified time: 2021-03-07 01:07:43
 
 import streamlit as st 
 from PIL import Image
 import style
-
+import random
 st.markdown("<h1 style='text-align: center;'>DeepStyle</h1>", unsafe_allow_html=True)
 st.markdown(
 	"""
@@ -30,12 +30,14 @@ elif(style_name=='Rain Princess'):
 else:
 	style_name='udnie'
 
+ran_num = random.randint(1,9999999)
+
 selected_model = style_name
 saved_model = "saved_models/"+style_name+".pth"
 
 input_img = "./images/content-images/"+img
 
-output_image = "./images/output-images/"+selected_model+"-"+img
+output_image = "./images/output-images/"+selected_model+"-"+str(ran_num)+"-"+img
 
 st.sidebar.header('Selected Style')
 sty_img = Image.open('./images/style-images/'+style_name+'.jpg')
