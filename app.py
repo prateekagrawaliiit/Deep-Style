@@ -2,7 +2,7 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-07 00:58:16
+# @Last Modified time: 2021-03-07 01:02:47
 
 import streamlit as st 
 from PIL import Image
@@ -55,11 +55,11 @@ image = Image.open(input_img)
 st.image(image,width=500)
 
 
-stylize_btn = st.button("- ### Stylize the selected Image")
+stylize_btn = st.button("Stylize the selected Image")
 
 if stylize_btn:
 	model = style.load_model(saved_model)
 	style.stylize(model,input_img,output_image)
-	st.write("""Converted Image :""")
+	st.write("""- ### Converted Image :""")
 	image = Image.open(output_image)
 	st.image(image,width=500)
