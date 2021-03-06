@@ -6,3 +6,4 @@ sklearn
 matplotlib
 imblearn
 torch
+torchvision
