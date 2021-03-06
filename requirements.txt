@@ -1,9 +1,4 @@
-joblib
 numpy
-pandas
 streamlit
-sklearn
-matplotlib
-imblearn
 torch
 torchvision
