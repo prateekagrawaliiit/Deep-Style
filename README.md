@@ -7,6 +7,7 @@ Technicalities :
 
 - The data has been used from the PyTorch library along with the pretained VGG models. 
 - For deployed I have used streamlit which is an open source python based web application deployment library.
+- The above application is quite computationally expensive and hence a GPU is preferred for faster results. It still takes only a couple of seconds to stylize it. Thanks for your patience.
 
 DeepStyle is built and maintained by **Prateek Agrawal**. Please contact at prateekagrawaliiit@gmail.com in case of queries or just to say Hi!!.
 
@@ -14,3 +15,4 @@ What's Next :
 
 - Custom Style Upload : User can input his desired custom style along with the image he wants to convert.
 - Custom Image Upload : User has the right to input any image and stylize it according to the themes available then.
+
