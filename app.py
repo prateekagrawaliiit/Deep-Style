@@ -2,11 +2,14 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-10 23:06:11
+# @Last Modified time: 2021-03-11 00:14:52
 
 import streamlit as st 
 from PIL import Image
 import style
+import io
+import os
+import shutil
 import random
 st.markdown("<h1 style='text-align: center;'>DeepStyle</h1>", unsafe_allow_html=True)
 st.markdown(
@@ -14,11 +17,7 @@ st.markdown(
 	**DeepStyle** is a Style Transfer web application implemented using transfer learning in PyTorch.
 	""")
 
-img = st.sidebar.selectbox('Select Image',('Amber','Cat'))
-if img=='Amber':
-	img = 'amber.jpg'
-else:
-	img='cat.png'
+
 
 style_name = st.sidebar.selectbox('Select Style',('Candy','Mosaic','Rain Princess','Udnie'))
 if(style_name=='Candy'):
@@ -34,14 +33,57 @@ ran_num = random.randint(1,9999999)
 
 selected_model = style_name
 saved_model = "saved_models/"+style_name+".pth"
+output_image =""
+input_img = ""
+upload = ""
+img ='selected'
+uploaded_file = st.file_uploader("Choose an image...", type="jpg")
+if uploaded_file is not None:
+	input_img = './images/content-images/'+str(ran_num)+'.jpg'
+	print(input_img)
+	with open(input_img, 'wb') as f:
+		f.write(uploaded_file.getbuffer()) 
+	output_image = "./images/output-images/"+selected_model+"-"+str(ran_num)+"-selected"+str(ran_num) +'.jpg'
 
-input_img = "./images/content-images/"+img
-
-output_image = "./images/output-images/"+selected_model+"-"+str(ran_num)+"-"+img
+else:
+	st.markdown("<h2 style='text-align: center;'>OR</h2>", unsafe_allow_html=True)
+	img = st.selectbox('Choose one from the following :',('Select','Amber','Cat'))
+	if img=='Amber':
+		img = 'amber.jpg'
+	elif img=='Select':
+		img = 'not_selected'
+	else:
+		img='cat.png'
+	input_img = "./images/content-images/"+img
+	output_image = "./images/output-images/"+selected_model+"-"+str(ran_num)+"-"+img
 
 st.sidebar.header('Selected Style')
 sty_img = Image.open('./images/style-images/'+style_name+'.jpg')
 st.sidebar.image(sty_img,width=300)
+
+a_file = open("./images/output-images/dummy.txt")
+lines = a_file.readlines()
+count = int(lines[0])
+_text = 'Total Images Stylized : '+str(count)
+st.sidebar.text(_text)
+
+if img!='not_selected':
+	st.write("""- ### Selected Source Image :""")
+	image = Image.open(input_img)
+	st.image(image,width=500)
+
+stylize_btn = st.button("Stylize the selected Image")
+
+if stylize_btn:
+	with open('./images/output-images/dummy.txt','w+') as f:
+		f.write(str(count+1))
+	f.close()
+
+	model = style.load_model(saved_model)
+	style.stylize(model,input_img,output_image)
+	st.write("""- ### Converted Image :""")
+	image = Image.open(output_image)
+	st.image(image,width=500)
 
 st.sidebar.markdown("""#### DeepStyle is built and maintained by **Prateek Agrawal**. Please contact in case of queries or just to say Hi!!!.""")
 github = '[GitHub](http://github.com/prateekagrawaliiit)'
@@ -51,17 +93,3 @@ st.sidebar.markdown("""""")
 st.sidebar.markdown(github, unsafe_allow_html=True)
 st.sidebar.markdown(linkedin, unsafe_allow_html=True)
 st.sidebar.markdown(email, unsafe_allow_html=True)
-
-st.write("""- ### Selected Source Image :""")
-image = Image.open(input_img)
-st.image(image,width=500)
-
-
-stylize_btn = st.button("Stylize the selected Image")
-
-if stylize_btn:
-	model = style.load_model(saved_model)
-	style.stylize(model,input_img,output_image)
-	st.write("""- ### Converted Image :""")
-	image = Image.open(output_image)
-	st.image(image,width=500)
