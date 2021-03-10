@@ -2,7 +2,7 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-07 01:07:43
+# @Last Modified time: 2021-03-10 23:06:11
 
 import streamlit as st 
 from PIL import Image
@@ -20,7 +20,7 @@ if img=='Amber':
 else:
 	img='cat.png'
 
-style_name = st.sidebar.selectbox('Select Image',('Candy','Mosaic','Rain Princess','Udnie'))
+style_name = st.sidebar.selectbox('Select Style',('Candy','Mosaic','Rain Princess','Udnie'))
 if(style_name=='Candy'):
 	style_name='candy'
 elif(style_name=='Mosaic'):
