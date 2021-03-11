@@ -2,14 +2,12 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-11 12:38:48
+# @Last Modified time: 2021-03-11 17:43:03
 
 import streamlit as st 
 from PIL import Image
 import style
-import io
 import os
-import shutil
 import random
 def clear_jpgs():
 	files_input = os.listdir('./images/content-images/')
@@ -77,7 +75,7 @@ st.sidebar.text(_text)
 if img!='not_selected':
 	st.write("""- ### Selected Source Image :""")
 	image = Image.open(input_img)
-	st.image(image,width=500)
+	st.image(image,width=400)
 
 stylize_btn = st.button("Stylize the selected Image")
 
@@ -90,7 +88,7 @@ if stylize_btn:
 	style.stylize(model,input_img,output_image)
 	st.write("""- ### Converted Image :""")
 	image = Image.open(output_image)
-	st.image(image,width=500)
+	st.image(image,width=400)
 
 st.sidebar.markdown("""#### DeepStyle is built and maintained by **Prateek Agrawal**. Please contact in case of queries or just to say Hi!!!.""")
 github = '[GitHub](http://github.com/prateekagrawaliiit)'
