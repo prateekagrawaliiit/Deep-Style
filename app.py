@@ -2,13 +2,15 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-11 17:43:03
+# @Last Modified time: 2021-03-11 17:54:45
 
 import streamlit as st 
 from PIL import Image
 import style
 import os
 import random
+
+@st.cache
 def clear_jpgs():
 	files_input = os.listdir('./images/content-images/')
 	files_output = os.listdir('./images/output-images/')
@@ -33,9 +35,7 @@ elif(style_name=='Rain Princess'):
 	style_name='rain_princess'
 else:
 	style_name='udnie'
-
 ran_num = random.randint(1,9999999)
-
 selected_model = style_name
 saved_model = "saved_models/"+style_name+".pth"
 output_image =""
