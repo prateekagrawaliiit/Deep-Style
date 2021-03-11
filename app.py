@@ -2,7 +2,7 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-11 17:54:45
+# @Last Modified time: 2021-03-11 23:15:06
 
 import streamlit as st 
 from PIL import Image
@@ -20,12 +20,6 @@ def clear_jpgs():
 		os.remove('./images/content-images/'+file)
 	for file in filtered_output:
 		os.remove('./images/output-images/'+file)
-clear_jpgs()
-st.markdown("<h1 style='text-align: center;'>DeepStyle</h1>", unsafe_allow_html=True)
-st.markdown(
-	"""
-	**DeepStyle** is a Style Transfer web application implemented using transfer learning in PyTorch.
-	""")
 style_name = st.sidebar.selectbox('Select Style',('Candy','Mosaic','Rain Princess','Udnie'))
 if(style_name=='Candy'):
 	style_name='candy'
@@ -35,6 +29,29 @@ elif(style_name=='Rain Princess'):
 	style_name='rain_princess'
 else:
 	style_name='udnie'
+st.sidebar.header('Selected Style')
+sty_img = Image.open('./images/style-images/'+style_name+'.jpg')
+st.sidebar.image(sty_img,width=300)
+a_file = open("./images/output-images/dummy.txt")
+lines = a_file.readlines()
+count = int(lines[0])
+_text = 'Total Images Stylized : '+str(count)
+st.sidebar.text(_text)
+st.sidebar.markdown("""#### DeepStyle is built and maintained by **Prateek Agrawal**. Please contact in case of queries or just to say Hi!!!.""")
+github = '[GitHub](http://github.com/prateekagrawaliiit)'
+linkedin = '[LinkedIn](https://www.linkedin.com/in/prateekagrawal1405/)'
+email = '<a href="mailto:prateekagrawaliiit@gmail.com">Email</a>'
+st.sidebar.markdown("""""")
+st.sidebar.markdown(github, unsafe_allow_html=True)
+st.sidebar.markdown(linkedin, unsafe_allow_html=True)
+st.sidebar.markdown(email, unsafe_allow_html=True)
+clear_jpgs()
+
+st.markdown("<h1 style='text-align: center;'>DeepStyle</h1>", unsafe_allow_html=True)
+st.markdown(
+	"""
+	**DeepStyle** is a Style Transfer web application implemented using transfer learning in PyTorch.
+	""")
 ran_num = random.randint(1,9999999)
 selected_model = style_name
 saved_model = "saved_models/"+style_name+".pth"
@@ -62,9 +79,7 @@ else:
 	input_img = "./images/content-images/"+img
 	output_image = "./images/output-images/"+selected_model+"-"+str(ran_num)+"-"+img
 
-st.sidebar.header('Selected Style')
-sty_img = Image.open('./images/style-images/'+style_name+'.jpg')
-st.sidebar.image(sty_img,width=300)
+
 
 a_file = open("./images/output-images/dummy.txt")
 lines = a_file.readlines()
@@ -90,11 +105,3 @@ if stylize_btn:
 	image = Image.open(output_image)
 	st.image(image,width=400)
 
-st.sidebar.markdown("""#### DeepStyle is built and maintained by **Prateek Agrawal**. Please contact in case of queries or just to say Hi!!!.""")
-github = '[GitHub](http://github.com/prateekagrawaliiit)'
-linkedin = '[LinkedIn](https://www.linkedin.com/in/prateekagrawal1405/)'
-email = '<a href="mailto:prateekagrawaliiit@gmail.com">Email</a>'
-st.sidebar.markdown("""""")
-st.sidebar.markdown(github, unsafe_allow_html=True)
-st.sidebar.markdown(linkedin, unsafe_allow_html=True)
-st.sidebar.markdown(email, unsafe_allow_html=True)
