@@ -2,7 +2,7 @@
 # @Author: prateek
 # @Date:   2021-03-06 21:48:25
 # @Last Modified by:   prateek
-# @Last Modified time: 2021-03-11 00:14:52
+# @Last Modified time: 2021-03-11 11:57:58
 
 import streamlit as st 
 from PIL import Image
@@ -11,14 +11,19 @@ import io
 import os
 import shutil
 import random
+files_input = os.listdir('./images/content-images/')
+files_output = os.listdir('./images/output-images/')
+filtered_input = [file for file in files_input if file.endswith('.jpg') and file != 'amber.jpg']
+filtered_output = [file for file in files_output if file.endswith('.jpg')]
+for file in filtered_input:
+	os.remove('./images/content-images/'+file)
+for file in filtered_output:
+	os.remove('./images/output-images/'+file)
 st.markdown("<h1 style='text-align: center;'>DeepStyle</h1>", unsafe_allow_html=True)
 st.markdown(
 	"""
 	**DeepStyle** is a Style Transfer web application implemented using transfer learning in PyTorch.
 	""")
-
-
-
 style_name = st.sidebar.selectbox('Select Style',('Candy','Mosaic','Rain Princess','Udnie'))
 if(style_name=='Candy'):
 	style_name='candy'
